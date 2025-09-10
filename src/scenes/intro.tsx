@@ -80,6 +80,10 @@ export default makeScene2D(function* (view) {
         >
           PRESENTA
         </Txt>
+        {/* TODO: loader
+            MAYBE: screen on and off animations (4 pointed star like)
+        */}
+
       </Rect>
       </Commodore>
     </>
