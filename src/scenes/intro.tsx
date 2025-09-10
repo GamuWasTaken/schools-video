@@ -1,10 +1,11 @@
 import { makeScene2D } from '@motion-canvas/2d'
 import { Img, Layout, Rect, Txt } from '@motion-canvas/2d/lib/components'
 import { all, waitFor } from '@motion-canvas/core/lib/flow'
-import { easeInOutCubic, easeOutBack } from '@motion-canvas/core/lib/tweening'
+import { easeInOutCubic, easeOutBack, linear } from '@motion-canvas/core/lib/tweening'
 import { createRef } from '@motion-canvas/core/lib/utils'
 
 import gpulLogo from '../images/gpul.svg'
+import { Commodore } from '../components/Commodore'
 
 export default makeScene2D(function* (view) {
   const background = createRef<Rect>()
@@ -14,10 +15,14 @@ export default makeScene2D(function* (view) {
   const tagline = createRef<Txt>()
   const presents = createRef<Txt>()
 
+  const commodore = createRef<Commodore>()
+
   yield view.add(
     <>
       {/* Light Background */}
-      <Rect ref={background} width={1920} height={1080} fill={'#f8fafc'} />
+      <Rect ref={background} width={1920} height={1080} fill={'#587D8B'} />
+
+      <Commodore ref={commodore}>
 
       {/* Main container */}
       <Rect
@@ -28,7 +33,7 @@ export default makeScene2D(function* (view) {
         justifyContent="center"
         gap={50}
         opacity={0}
-        scale={0.8}
+        scale={1.1}
       >
         {/* GPUL Logo */}
         <Img ref={logo} src={gpulLogo} width={300} opacity={0} scale={0} />
@@ -76,6 +81,7 @@ export default makeScene2D(function* (view) {
           PRESENTA
         </Txt>
       </Rect>
+      </Commodore>
     </>
   )
 
