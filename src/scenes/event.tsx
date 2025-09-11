@@ -1,8 +1,9 @@
-import { makeScene2D } from '@motion-canvas/2d'
+import { makeScene2D, Node } from '@motion-canvas/2d'
 import { Img, Layout, Rect, Txt } from '@motion-canvas/2d/lib/components'
 import { all, waitFor } from '@motion-canvas/core/lib/flow'
 import { easeInOutCubic, easeOutBack } from '@motion-canvas/core/lib/tweening'
 import { createRef } from '@motion-canvas/core/lib/utils'
+import crt from '../shaders/crt.glsl';
 
 import ficLogo from '../images/fic.svg'
 import udcLogo from '../images/udc.svg'
@@ -15,9 +16,9 @@ export default makeScene2D(function* (view) {
   const footer = createRef<Layout>()
 
   yield view.add(
-    <>
+    <Node shaders={crt}>
       {/* Light Background */}
-      <Rect ref={background} width={1920} height={1080} fill={'#f8fafc'} />
+      <Rect ref={background} width={1920 * 2} height={1080 * 2} fill={'#A6B8B6'} />
 
       {/* Main container */}
       <Rect
@@ -29,15 +30,13 @@ export default makeScene2D(function* (view) {
         gap={50}
         width={1600}
         height={900}
-        fill={'white'}
-        stroke={'#e2e8f0'}
         lineWidth={2}
         radius={20}
         shadowColor={'rgba(0, 0, 0, 0.1)'}
         shadowOffset={[0, 10]}
         shadowBlur={40}
         opacity={0}
-        scale={0.8}
+        scale={1.3}
       >
         {/* Header Section with Logos */}
         <Layout
@@ -169,13 +168,12 @@ export default makeScene2D(function* (view) {
           </Rect>
         </Layout>
       </Rect>
-    </>
+    </Node>
   )
 
   // Animation sequence
   yield* all(
     container().opacity(1, 0.8, easeInOutCubic),
-    container().scale(1, 0.8, easeOutBack)
   )
 
   yield* waitFor(0.2)
