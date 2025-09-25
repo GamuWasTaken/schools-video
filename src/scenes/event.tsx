@@ -1,9 +1,10 @@
-import { makeScene2D, Node } from '@motion-canvas/2d'
+import { brightness, makeScene2D, Node } from '@motion-canvas/2d'
 import { Img, Layout, Rect, Txt } from '@motion-canvas/2d/lib/components'
 import { all, waitFor } from '@motion-canvas/core/lib/flow'
 import { easeInOutCubic, easeOutBack } from '@motion-canvas/core/lib/tweening'
 import { createRef } from '@motion-canvas/core/lib/utils'
 import crt from '../shaders/crt.glsl';
+import { data } from '../project';
 
 import ficLogo from '../images/fic.svg'
 import udcLogo from '../images/udc.svg'
@@ -84,50 +85,34 @@ export default makeScene2D(function* (view) {
             cache
             textAlign={'center'}
           >
-            "Como saír de Vim{'\n'}e algunha cousa máis"
+            {data.title}
           </Txt>
 
           <Layout direction="column" alignItems="center" gap={15}>
             <Txt fontSize={52} fill={'#0ea5e9'} fontWeight={700} cache>
-              Miguel López
+              {data.author}
             </Txt>
             <Layout direction="row" alignItems="center" gap={30}>
+
+                {/* TODO */}
+              {
+                data.tags.map( tag =>
+                
               <Rect
                 layout
-                fill={'rgba(14, 165, 233, 0.1)'}
+                fill={'#0ea5e922'}
                 stroke={'#0ea5e9'}
                 lineWidth={2}
                 radius={10}
                 padding={15}
               >
-                <Txt fontSize={28} fill={'#0ea5e9'} fontWeight={600} cache>
-                  GNU Linux
+                <Txt fontSize={28} fill={'#0ea5e9'} filters={[brightness(0.6)]} fontWeight={600} cache>
+                  {tag}
                 </Txt>
               </Rect>
-              <Rect
-                layout
-                fill={'rgba(16, 185, 129, 0.1)'}
-                stroke={'#10b981'}
-                lineWidth={2}
-                radius={10}
-                padding={15}
-              >
-                <Txt fontSize={28} fill={'#10b981'} fontWeight={600} cache>
-                  Open Source
-                </Txt>
-              </Rect>
-              <Rect
-                layout
-                fill={'rgba(139, 92, 246, 0.1)'}
-                stroke={'#8b5cf6'}
-                lineWidth={2}
-                radius={10}
-                padding={15}
-              >
-                <Txt fontSize={28} fill={'#8b5cf6'} fontWeight={600} cache>
-                  Vim
-                </Txt>
-              </Rect>
+
+              )
+            }
             </Layout>
           </Layout>
         </Layout>
