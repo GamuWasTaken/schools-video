@@ -9,6 +9,31 @@ import { data } from '../project';
 import ficLogo from '../images/fic.svg'
 import udcLogo from '../images/udc.svg'
 
+const COLORS = [
+  "#0ea5e9",
+  "#10b981",
+  "#8b5cf6",
+  "#ec4899"
+]
+const BG_COLORS = [
+  "#0ea5e922",
+  "#10b98122",
+  "#8b5cf622",
+  "#ec489922"
+]
+
+const dayFormatter = new Intl.DateTimeFormat("gl-es", {
+  weekday: 'long',
+  day: 'numeric',
+  month: 'long'
+})
+
+const timeFormatter = new Intl.DateTimeFormat("gl-es", {
+  hour: 'numeric',
+  minute: 'numeric',
+  hour12: false
+})
+
 export default makeScene2D(function* (view) {
   const background = createRef<Rect>()
   const container = createRef<Rect>()
@@ -94,23 +119,21 @@ export default makeScene2D(function* (view) {
             </Txt>
             <Layout direction="row" alignItems="center" gap={30}>
 
-                {/* TODO */}
               {
-                data.tags.map( tag =>
+                data.tags.map( (tag, i) =>
                 
               <Rect
                 layout
-                fill={'#0ea5e922'}
-                stroke={'#0ea5e9'}
+                fill={BG_COLORS[i]}
+                stroke={COLORS[i]}
                 lineWidth={2}
                 radius={10}
                 padding={15}
               >
-                <Txt fontSize={28} fill={'#0ea5e9'} filters={[brightness(0.6)]} fontWeight={600} cache>
+                <Txt fontSize={28} fill={COLORS[i]} filters={[brightness(0.3)]} fontWeight={600} cache>
                   {tag}
                 </Txt>
               </Rect>
-
               )
             }
             </Layout>
@@ -134,8 +157,8 @@ export default makeScene2D(function* (view) {
             radius={15}
             padding={25}
           >
-            <Txt fontSize={38} fill={'#0ea5e9'} fontWeight={700} cache>
-              Martes, 11 de marzo
+            <Txt filters={[brightness(0.3)]} fontSize={38} fill={'#0ea5e9'} fontWeight={700} cache>
+              {dayFormatter.format(data.startDate)}
             </Txt>
           </Rect>
 
@@ -147,8 +170,10 @@ export default makeScene2D(function* (view) {
             radius={15}
             padding={25}
           >
-            <Txt fontSize={38} fill={'#f97316'} fontWeight={700} cache>
-              18:30 - 20:00h
+            <Txt filters={[brightness(0.3)]} fontSize={38} fill={'#f97316'} fontWeight={700} cache>
+              {timeFormatter.format(data.startDate)}
+              {" - "}
+              {timeFormatter.format(data.endDate)}
             </Txt>
           </Rect>
         </Layout>
