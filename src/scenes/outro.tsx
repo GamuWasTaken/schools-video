@@ -54,7 +54,7 @@ export default makeScene2D(function* (view) {
           Libera o teu TFG/TFM ya!
         </Txt>
         <Txt>
-          Y gana hasta 750€
+          E gaña até 750€
         </Txt>
         </Layout>
         {/* Social Media Section */}
@@ -62,7 +62,7 @@ export default makeScene2D(function* (view) {
           ref={socialContainer}
           direction="column"
           alignItems="center"
-          gap={50}
+          gap={10}
           opacity={0}
           y={50}
         >
@@ -70,7 +70,7 @@ export default makeScene2D(function* (view) {
             Consulta las bases en:
           </Txt>
 
-          <Img src={qr} height={400} />
+          <Img src={qr} height={300} />
           <Txt fontSize={38} fill={'#1e293b'} fontWeight={600} cache>
             premio.gpul.org
           </Txt>

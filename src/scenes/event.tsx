@@ -105,7 +105,7 @@ export default makeScene2D(function* (view) {
           y={50}
         >
           <Txt>
-            Fecha limite:
+            Fecha límite:
           </Txt>
           <Rect
             layout
@@ -116,7 +116,7 @@ export default makeScene2D(function* (view) {
             padding={25}
           >
             <Txt fontSize={42} fill={'#0ea5e9'} fontWeight={700} cache>
-              30 de octubro
+              30 de outubro
             </Txt>
           </Rect>
         </Layout>
