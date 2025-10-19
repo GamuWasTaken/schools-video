@@ -105,7 +105,7 @@ export default makeScene2D(function* (view) {
           y={50}
         >
           <Txt>
-            Fecha límite:
+            Data límite:
           </Txt>
           <Rect
             layout

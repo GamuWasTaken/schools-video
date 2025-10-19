@@ -51,7 +51,7 @@ export default makeScene2D(function* (view) {
           scale={0.9}
           cache
         >
-          Libera o teu TFG/TFM ya!
+          Libera o teu TFG/TFM xa!
         </Txt>
         <Txt>
           E gaña até 750€
@@ -67,7 +67,7 @@ export default makeScene2D(function* (view) {
           y={50}
         >
           <Txt fontSize={38} fill={'#1e293b'} fontWeight={600} cache>
-            Consulta las bases en:
+            Consulta as bases en:
           </Txt>
 
           <Img src={qr} height={300} />
