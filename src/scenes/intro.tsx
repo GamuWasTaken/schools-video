@@ -1,6 +1,6 @@
 import { makeScene2D, Node } from '@motion-canvas/2d'
 import { Img, Layout, Rect, Txt } from '@motion-canvas/2d/lib/components'
-import { all, waitFor } from '@motion-canvas/core/lib/flow'
+import { all, sequence, waitFor } from '@motion-canvas/core/lib/flow'
 import { easeInOutCubic, easeOutBack, linear } from '@motion-canvas/core/lib/tweening'
 import { createRef, range} from '@motion-canvas/core/lib/utils'
 
@@ -114,7 +114,7 @@ export default makeScene2D(function* (view) {
         />
         </Layout>
         </Rect>
-        {/* 
+        {/*
             MAYBE: screen on and off animations (4 pointed star like)
         */}
       </Rect>
@@ -122,34 +122,32 @@ export default makeScene2D(function* (view) {
     </Node>
   )
 
-  // Animation sequence
-  yield* container().opacity(1, 0.6, easeInOutCubic)
-  yield* waitFor(0.2)
-
-  yield* all(logo().opacity(1, 0.8), logo().scale(1, 1.2, easeOutBack))
-
-  yield* waitFor(0.3)
-
-  yield* all(
-    associationName().opacity(1, 0.8),
-    associationName().y(0, 0.8, easeInOutCubic)
-  )
-
-  yield* waitFor(0.2)
-
-  yield* tagline().opacity(1, 0.6)
-  yield* waitFor(0.4)
-
-  yield* all(
-    presents().opacity(1, 0.8),
-    presents().scale(1, 0.8, easeOutBack),
-    load(maxLoad, 2, linear)
+  yield* sequence(
+    .8,
+    container().opacity(1, 0.8, easeInOutCubic),
+    
+    all(
+      logo().opacity(1, 0.8),
+      logo().scale(1, 1.2, easeOutBack)
+    ),
+    all(
+      associationName().opacity(1, 0.8),
+      associationName().y(0, 0.6, easeInOutCubic)
+    ),
+    tagline().opacity(1, 0.8),
+    all(
+      presents().opacity(1, 0.8),
+      presents().scale(1, 0.8, easeOutBack),
+      load(maxLoad, 1, linear)
+    ),
+    waitFor(.5),
   )
 
   yield* all(
-    // Gentle logo pulse
-    logo().scale(1.05, 0.5).to(1, 0.5),
-    camera().scale([2,2], 1),
-    container().opacity(0, 0.6, easeInOutCubic)
-  )
+      // Gentle logo pulse
+      logo().scale(1.05, 0.5).to(1, 0.5),
+      camera().scale([2,2], 1),
+      container().opacity(0, 0.6, easeInOutCubic)
+    )
+
 })
