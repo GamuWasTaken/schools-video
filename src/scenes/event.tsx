@@ -1,10 +1,11 @@
 import { brightness, makeScene2D, Node } from '@motion-canvas/2d'
 import { Img, Layout, Rect, Txt } from '@motion-canvas/2d/lib/components'
 import { all, sequence, waitFor } from '@motion-canvas/core/lib/flow'
-import { easeInOutCubic, easeOutBack } from '@motion-canvas/core/lib/tweening'
+import { easeInBounce, easeInOutCubic, easeOutBack } from '@motion-canvas/core/lib/tweening'
 import { createRef } from '@motion-canvas/core/lib/utils'
 import crt from '../shaders/crt.glsl';
 import { data } from '../project';
+import { BBox, zoomInTransition, zoomOutTransition } from '@motion-canvas/core'
 
 const COLORS = [
   "#0ea5e9",
@@ -34,11 +35,9 @@ const timeFormatter = new Intl.DateTimeFormat("gl-es", {
 export default makeScene2D(function* (view) {
   const background = createRef<Rect>()
   const container = createRef<Rect>()
-  const header = createRef<Layout>()
   const footer = createRef<Layout>()
   const main = createRef<Layout>()
-  const title = createRef<Txt>()
-  const author = createRef<Txt>()
+  const title = createRef<Layout>()
 
   yield view.add(
     <Node shaders={crt}>
@@ -59,18 +58,15 @@ export default makeScene2D(function* (view) {
         scale={1.3}
       >
         {/* Main Content */}
-        <Layout
-          ref={header}
-          direction="row"
-          alignItems="center"
-          gap={40}
-          y={-50}
-        >
-          <Layout direction="column" alignItems="center" gap={15}>
+          <Layout
+            ref={title}
+            direction="column"
+            opacity={0}
+            alignItems="center"
+            gap={15}
+          >
             <Txt
-              ref={title}
               fontSize={68}
-              opacity={0}
               fill={'#1e293b'}
               fontWeight={700}
               letterSpacing={2}
@@ -80,9 +76,7 @@ export default makeScene2D(function* (view) {
             {data.title}
             </Txt>
             <Txt
-              ref={author}
               fontSize={38}
-              opacity={0}
               fill={'#64748b'}
               fontWeight={600}
               cache
@@ -91,7 +85,6 @@ export default makeScene2D(function* (view) {
             </Txt>
             <Rect width={400} height={3} fill={'#0ea5e9'} radius={2} />
           </Layout>
-        </Layout>
         <Layout
           ref={main}
           direction="column"
@@ -179,14 +172,8 @@ export default makeScene2D(function* (view) {
   )
 
   yield* sequence(
-    .1,
-    
+    .3,
     title().opacity(1, 0.4, easeInOutCubic),
-    author().opacity(1, 0.4, easeInOutCubic),
-    all(
-      header().opacity(1, 0.3, easeInOutCubic),
-      header().y(0, 0.3, easeInOutCubic)
-    ),
     waitFor(0.3),
 
     all(
@@ -203,21 +190,16 @@ export default makeScene2D(function* (view) {
 
     // Highlight important info
   )
-  yield* all(footer().scale(1.05, 0.4).to(1, 0.4)),
-  yield* waitFor(1)
-  yield* all(footer().scale(1.05, 0.4).to(1, 0.4)),
-  yield* waitFor(1)
-  yield* all(footer().scale(1.05, 0.4).to(1, 0.4)),
-  yield* waitFor(1)
-  yield* all(footer().scale(1.05, 0.4).to(1, 0.4)),
-  yield* waitFor(1)
-  yield* all(footer().scale(1.05, 0.4).to(1, 0.4)),
-  yield* waitFor(1)
-  yield* all(footer().scale(1.05, 0.4).to(1, 0.4)),
-  yield* waitFor(1)
-  yield* all(footer().scale(1.05, 0.4).to(1, 0.4)),
-  yield* waitFor(1)
-  yield* all(footer().scale(1.05, 0.4).to(1, 0.4)),
-  yield* waitFor(1)
-
+  yield* sequence(
+    2,
+    all(footer().scale(1.05, 0.4).to(1, 0.4)),
+    all(footer().scale(1.05, 0.4).to(1, 0.4)),
+    title().rotation(1, .2).to(-1,.2).to(0, .2),
+    all(footer().scale(1.05, 0.4).to(1, 0.4)),
+    all(footer().scale(1.05, 0.4).to(1, 0.4)),
+    title().filters.blur(10, 1, easeInBounce).to(0,1, easeInBounce),
+    all(footer().scale(1.05, 0.4).to(1, 0.4)),
+    all(footer().scale(1.05, 0.4).to(1, 0.4)),
+    title().rotation(1, .2).to(-1,.2).to(0, .2),
+  )
 })

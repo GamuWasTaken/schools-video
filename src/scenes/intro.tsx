@@ -144,10 +144,9 @@ export default makeScene2D(function* (view) {
   )
 
   yield* all(
-      // Gentle logo pulse
-      logo().scale(1.05, 0.5).to(1, 0.5),
-      camera().scale([2,2], 1),
-      container().opacity(0, 0.6, easeInOutCubic)
-    )
+    logo().scale(1.05, 0.5).to(1, 0.5),
+    camera().scale([2,2], 1),
+    container().opacity(0, 1, easeInOutCubic)
+  )
 
 })
